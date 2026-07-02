@@ -1,0 +1,142 @@
+.card {
+  position: relative;
+  background: var(--color-cream);
+  border-radius: 10px;
+  overflow: visible;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  width: 100%;
+}
+
+/* Miniatura real de portada */
+.coverWrap {
+  width: 100%;
+  height: 155px;
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  background: var(--color-pine-dark);
+}
+
+.coverScaled {
+  width: 500px;
+  height: 708px;
+  transform: scale(0.32);
+  transform-origin: top left;
+  pointer-events: none;
+  user-select: none;
+}
+
+.favBadge {
+  position: absolute;
+  bottom: 6px;
+  left: 8px;
+  background: var(--color-honey);
+  color: var(--color-pine-dark);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+.info {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.name {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-pine-dark);
+  line-height: 1.2;
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--color-kraft-dark);
+}
+
+.lastOpened {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--color-honey);
+  opacity: 0.75;
+}
+
+/* Menú de opciones */
+.menuWrap {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+}
+
+.menuBtn {
+  background: rgba(43, 52, 42, 0.55);
+  border: none;
+  color: var(--color-cream);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding-bottom: 3px;
+}
+
+.menuOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+}
+
+.menu {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  overflow: hidden;
+  min-width: 160px;
+  z-index: 20;
+}
+
+.menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--color-cream-dark);
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--color-pine-dark);
+}
+
+.menu button:last-child { border-bottom: none; }
+.menu button:hover { background: var(--color-cream); }
+
+.menuDelete { color: var(--color-apple) !important; }

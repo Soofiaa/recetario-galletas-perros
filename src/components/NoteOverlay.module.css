@@ -1,0 +1,100 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 52, 42, 0.6);
+  z-index: 300;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.panel {
+  background: var(--color-white);
+  border-radius: 16px 16px 0 0;
+  width: 100%;
+  max-width: 540px;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-kraft-dark);
+  margin: 0;
+}
+
+.recipeName {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-pine-dark);
+  margin: 2px 0 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--color-kraft-dark);
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.textarea {
+  border: 1px solid var(--color-kraft);
+  border-radius: 8px;
+  padding: var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--color-pine-dark);
+  resize: none;
+  line-height: 1.5;
+  outline: none;
+  background: var(--color-cream);
+}
+
+.textarea:focus {
+  border-color: var(--color-pine);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
+.cancel, .save {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: 8px;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel {
+  background: var(--color-cream-dark);
+  color: var(--color-pine-dark);
+}
+
+.save {
+  background: var(--color-pine-dark);
+  color: var(--color-cream);
+}

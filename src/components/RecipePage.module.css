@@ -1,0 +1,302 @@
+.page {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-cream);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Pestaña ── */
+.tab {
+  position: absolute;
+  top: 0;
+  left: clamp(10px, 5%, 38px);
+  background: var(--color-pine-dark);
+  color: var(--color-cream);
+  padding: 5px 12px 7px;
+  border-radius: 0 0 8px 8px;
+  font-family: var(--font-mono);
+  font-size: clamp(8px, 2vw, 10px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 1;
+}
+
+.tabIcon {
+  width: 11px;
+  height: 11px;
+  stroke: var(--color-cream);
+  flex-shrink: 0;
+}
+
+/* ── Cabecera ── */
+.head {
+  padding: clamp(36px, 10%, 56px) clamp(12px, 6%, 34px) clamp(8px, 2%, 14px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(62, 74, 61, 0.18);
+  flex-shrink: 0;
+}
+
+.iconCircle {
+  width: clamp(38px, 10%, 48px);
+  height: clamp(38px, 10%, 48px);
+  min-width: clamp(38px, 10%, 48px);
+  background: var(--color-kraft);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon {
+  width: 60%;
+  height: 60%;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(14px, 4.5vw, 21px);
+  color: var(--color-pine-dark);
+  line-height: 1.08;
+}
+
+.subtitle {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(8.5px, 2.2vw, 10.5px);
+  color: var(--color-apple);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+/* ── Cuerpo ── */
+.body {
+  padding: clamp(8px, 3%, 20px) clamp(12px, 6%, 34px) clamp(4px, 1.5%, 12px);
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: clamp(8px, 2vw, 9.5px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-pine);
+  margin-top: 4px;
+  margin-bottom: 1px;
+}
+
+/* ── Ingredientes ── */
+.ingredients {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+}
+
+.ingredient {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: clamp(10px, 2.8vw, 12px);
+  padding: clamp(2px, 0.8%, 4px) 0;
+  border-bottom: 1px dotted rgba(62, 74, 61, 0.18);
+}
+
+.ingName {
+  color: var(--color-pine-dark);
+  padding-right: 6px;
+}
+
+.ingAmount {
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 2.5vw, 11px);
+  color: var(--color-apple);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Pasos ── */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3px, 1%, 6px);
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-family: var(--font-sans);
+  font-size: clamp(10px, 2.8vw, 11.5px);
+  line-height: 1.4;
+  color: var(--color-pine-dark);
+}
+
+.stepNum {
+  width: 15px;
+  height: 15px;
+  min-width: 15px;
+  border-radius: 50%;
+  background: var(--color-pine);
+  color: var(--color-cream);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Botones de acción (favorito y nota) ── */
+.actions {
+  position: absolute;
+  top: 36px;
+  right: clamp(8px, 4%, 16px);
+  display: flex;
+  gap: 4px;
+  z-index: 2;
+}
+
+.actionBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--color-kraft);
+  background: var(--color-cream);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-kraft-dark);
+  transition: all 0.15s;
+}
+
+.favActive {
+  color: var(--color-honey);
+  border-color: var(--color-honey);
+  background: var(--color-honey-light);
+}
+
+.noteActive {
+  border-color: var(--color-pine);
+  background: var(--color-cream-dark);
+}
+
+/* ── Emoji ícono (recetas creadas manualmente) ── */
+.emojiIcon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+/* ── Vista previa de nota personal ── */
+.notePreview {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  background: var(--color-honey-light);
+  border-left: 3px solid var(--color-honey);
+  border-radius: 0 4px 4px 0;
+  padding: 6px 8px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.noteIcon {
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.noteText {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  color: var(--color-pine-dark);
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+/* ── Etiquetas ── */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px 0 2px;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: clamp(8px, 2vw, 9px);
+  color: var(--color-pine);
+  background: rgba(62, 74, 61, 0.08);
+  border: 1px solid rgba(62, 74, 61, 0.18);
+  border-radius: 10px;
+  padding: 2px 7px;
+}
+
+/* ── Pie ── */
+.foot {
+  padding: clamp(8px, 3%, 20px) clamp(12px, 6%, 34px) clamp(10px, 3.5%, 26px);
+  border-top: 1px solid rgba(62, 74, 61, 0.18);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.stamp {
+  border: 1.5px dashed var(--color-apple);
+  border-radius: 8px;
+  padding: 5px 9px;
+  transform: rotate(-2deg);
+  flex-shrink: 0;
+}
+
+.stampTitle {
+  font-family: var(--font-mono);
+  font-size: clamp(7px, 1.8vw, 8px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-apple);
+  margin-bottom: 2px;
+}
+
+.stampValue {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(9px, 2.5vw, 11px);
+  color: var(--color-pine-dark);
+  line-height: 1.25;
+}
+
+.note {
+  font-family: var(--font-sans);
+  font-size: clamp(9px, 2.4vw, 10px);
+  color: var(--color-pine-dark);
+  opacity: 0.65;
+  line-height: 1.4;
+  margin: 0;
+}

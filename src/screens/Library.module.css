@@ -1,0 +1,137 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-pine-dark);
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid rgba(217, 203, 175, 0.1);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.logo {
+  font-size: 1.6rem;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-cream);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.sub {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--color-kraft);
+  margin: 0;
+  letter-spacing: 0.06em;
+}
+
+.headerBtns {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.searchBtn,
+.headerIconBtn {
+  background: rgba(250, 246, 236, 0.1);
+  border: 1px solid rgba(217, 203, 175, 0.2);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-cream);
+  transition: background 0.15s;
+}
+
+.headerIconBtn:hover,
+.searchBtn:hover {
+  background: rgba(250, 246, 236, 0.2);
+}
+
+/* ── Grid de libros ── */
+.grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  align-content: start;
+}
+
+/* Tarjeta de "nuevo libro" */
+.newCard {
+  background: rgba(250, 246, 236, 0.05);
+  border: 1.5px dashed rgba(217, 203, 175, 0.25);
+  border-radius: 10px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.newCard:hover {
+  background: rgba(250, 246, 236, 0.1);
+}
+
+.newPlus {
+  font-size: 1.8rem;
+  color: var(--color-kraft);
+  line-height: 1;
+}
+
+.newLabel {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--color-kraft);
+  text-align: center;
+}
+
+/* ── Footer de importación ── */
+.footer {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-top: 1px solid rgba(217, 203, 175, 0.1);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.importBtn {
+  background: rgba(250, 246, 236, 0.08);
+  border: 1px solid rgba(217, 203, 175, 0.2);
+  border-radius: 20px;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-cream);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.importBtn:hover {
+  background: rgba(250, 246, 236, 0.15);
+}

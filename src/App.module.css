@@ -1,0 +1,141 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--color-pine-dark);
+  padding-bottom: var(--space-lg);
+}
+
+/* ── Barra superior ── */
+.topBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-lg);
+  background: rgba(43, 52, 42, 0.9);
+  border-bottom: 1px solid rgba(217, 203, 175, 0.15);
+}
+
+.topBarTitle {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--color-cream);
+  letter-spacing: 0.02em;
+}
+
+.topBarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.pageIndicator {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-kraft);
+  letter-spacing: 0.1em;
+}
+
+.printToggle {
+  background: none;
+  border: 1px solid var(--color-kraft-dark);
+  color: var(--color-cream);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.printToggle:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ── Escenario del libro ── */
+.stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
+  width: 100%;
+}
+
+.book {
+  box-shadow: var(--shadow-page);
+  border-radius: 2px;
+}
+
+/* ── Botones de navegación ── */
+.navBtn {
+  background: rgba(250, 246, 236, 0.08);
+  border: 1px solid rgba(217, 203, 175, 0.2);
+  color: var(--color-cream);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.navBtn:hover:not(:disabled) {
+  background: rgba(250, 246, 236, 0.18);
+}
+
+.navBtn:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+/* ── Hint ── */
+.hint {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: rgba(217, 203, 175, 0.4);
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding-bottom: var(--space-sm);
+}
+
+/* ── Responsive mobile ── */
+@media (max-width: 500px) {
+  .navBtn {
+    display: none;
+  }
+
+  .stage {
+    padding: 4px 0;
+    justify-content: center;
+  }
+
+  .topBar {
+    padding: var(--space-xs) var(--space-md);
+  }
+
+  .hint {
+    display: none;
+  }
+}
+
+/* ── Ocultar UI al imprimir ── */
+@media print {
+  .shell {
+    display: block;
+    background: white;
+  }
+
+  .topBar,
+  .stage,
+  .hint {
+    display: none;
+  }
+}

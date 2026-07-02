@@ -1,0 +1,50 @@
+:root {
+  /* ── Colores ── */
+  --color-cream:      #FAF6EC;
+  --color-cream-dark: #F0E9D6;
+  --color-pine:       #3E4A3D;
+  --color-pine-dark:  #2B342A;
+  --color-apple:      #C1443B;
+  --color-apple-light:#FDECEA;
+  --color-honey:      #E0982F;
+  --color-honey-light:#FDF3E0;
+  --color-kraft:      #D9CBAF;
+  --color-kraft-dark: #B8A88A;
+  --color-white:      #FFFFFF;
+
+  /* ── Tipografías ── */
+  --font-serif:  'Fraunces', Georgia, serif;
+  --font-sans:   'Work Sans', system-ui, sans-serif;
+  --font-mono:   'IBM Plex Mono', 'Courier New', monospace;
+
+  /* ── Página A5 en pantalla (148mm × 210mm @ 96dpi) ── */
+  --page-w: 500px;
+  --page-h: 708px;
+
+  /* ── Espaciados ── */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+
+  /* ── Sombras ── */
+  --shadow-page: 0 4px 24px rgba(43, 52, 42, 0.18), 0 1px 4px rgba(43, 52, 42, 0.10);
+  --shadow-soft: 0 2px 8px rgba(43, 52, 42, 0.10);
+}
+
+[data-dark="1"] {
+  --color-cream:      #1C201C;
+  --color-cream-dark: #141814;
+  --color-pine:       #7A8F79;
+  --color-pine-dark:  #E8E2D4;
+  --color-apple:      #E06B62;
+  --color-apple-light:#2A1510;
+  --color-honey:      #F0A940;
+  --color-honey-light:#2A1F08;
+  --color-kraft:      #5A5040;
+  --color-kraft-dark: #7A6E58;
+  --color-white:      #252B25;
+  --shadow-soft: 0 2px 8px rgba(0,0,0,0.35);
+  --shadow-page: 0 4px 24px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3);
+}

@@ -1,0 +1,209 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 500;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.panel {
+  background: var(--color-cream);
+  border-radius: 20px 20px 0 0;
+  padding: var(--space-lg);
+  width: 100%;
+  max-width: 500px;
+  max-height: 85vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-bottom: calc(var(--space-xl) + env(safe-area-inset-bottom, 0px));
+}
+
+[data-dark="1"] .panel {
+  background: #1E231E;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--color-pine);
+  margin: 0;
+}
+
+[data-dark="1"] .title { color: var(--color-cream); }
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--color-pine);
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.yieldRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.yieldLabel {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--color-pine);
+  opacity: 0.7;
+}
+
+[data-dark="1"] .yieldLabel { color: var(--color-kraft); }
+
+.yieldValue {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-pine);
+}
+
+[data-dark="1"] .yieldValue { color: var(--color-cream); }
+
+.scaleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.scaleLabel {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-pine);
+}
+
+[data-dark="1"] .scaleLabel { color: var(--color-cream); }
+
+.counter {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--color-kraft);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.countBtn {
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-pine);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-dark="1"] .countBtn { color: var(--color-cream); }
+
+.countInput {
+  width: 52px;
+  text-align: center;
+  border: none;
+  border-left: 1px solid var(--color-kraft);
+  border-right: 1px solid var(--color-kraft);
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-pine);
+  height: 36px;
+  padding: 0;
+  -moz-appearance: textfield;
+}
+
+.countInput::-webkit-inner-spin-button,
+.countInput::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+[data-dark="1"] .countInput { color: var(--color-cream); }
+
+.unitHint {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--color-pine);
+  opacity: 0.6;
+}
+
+.factor {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-honey);
+  margin: 0;
+  font-weight: 600;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--color-kraft);
+  border-bottom: 1px solid var(--color-kraft);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(217,203,175,0.3);
+  gap: var(--space-sm);
+}
+
+.item:last-child { border-bottom: none; }
+
+.ingName {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--color-pine);
+  flex: 1;
+}
+
+[data-dark="1"] .ingName { color: var(--color-cream); }
+
+.ingAmt {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-pine-dark);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+[data-dark="1"] .ingAmt { color: var(--color-kraft); }
+
+.ingAmtAprox {
+  color: var(--color-apple);
+  opacity: 0.8;
+}
+
+.footnote {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: var(--color-pine);
+  opacity: 0.55;
+  margin: 0;
+  line-height: 1.4;
+  font-style: italic;
+}

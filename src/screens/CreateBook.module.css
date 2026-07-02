@@ -1,0 +1,286 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-pine-dark);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-lg);
+  background: rgba(43, 52, 42, 0.95);
+  border-bottom: 1px solid rgba(217, 203, 175, 0.12);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.cancelBtn {
+  background: none;
+  border: none;
+  color: var(--color-kraft);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-cream);
+  margin: 0;
+}
+
+.saveBtn {
+  background: var(--color-honey);
+  border: none;
+  border-radius: 6px;
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-pine-dark);
+  cursor: pointer;
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* ── Sección del libro ── */
+.bookSection {
+  background: rgba(250, 246, 236, 0.06);
+  border-radius: 10px;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* ── Tabs de recetas ── */
+.recipeTabs {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.recipeTab {
+  background: rgba(250, 246, 236, 0.06);
+  border: 1px solid rgba(217, 203, 175, 0.2);
+  border-radius: 20px;
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-kraft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.12s;
+}
+
+.recipeTabActive {
+  background: var(--color-cream);
+  color: var(--color-pine-dark);
+  border-color: var(--color-cream);
+}
+
+.removeTab {
+  font-size: 0.6rem;
+  opacity: 0.5;
+  margin-left: 2px;
+}
+
+.addRecipeTab {
+  background: none;
+  border: 1.5px dashed rgba(217, 203, 175, 0.25);
+  border-radius: 20px;
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-kraft);
+  cursor: pointer;
+}
+
+/* ── Editor de receta ── */
+.recipeEditor {
+  background: rgba(250, 246, 236, 0.06);
+  border-radius: 10px;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* ── Campos ── */
+.fieldLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-kraft);
+  margin-top: 4px;
+}
+
+.input, .select, .textarea {
+  background: rgba(250, 246, 236, 0.08);
+  border: 1px solid rgba(217, 203, 175, 0.2);
+  border-radius: 6px;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--color-cream);
+  outline: none;
+  width: 100%;
+}
+
+.input::placeholder, .textarea::placeholder { color: rgba(217, 203, 175, 0.35); }
+.input:focus, .select:focus, .textarea:focus { border-color: rgba(217, 203, 175, 0.5); }
+
+.select option { background: var(--color-pine-dark); }
+.textarea { resize: vertical; }
+
+.row { display: flex; gap: var(--space-sm); }
+.col { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+
+/* ── Ícono emoji ── */
+.emojiRow { position: relative; }
+
+.emojiBtn {
+  background: rgba(250, 246, 236, 0.08);
+  border: 1px solid rgba(217, 203, 175, 0.2);
+  border-radius: 8px;
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.emojiPreview { font-size: 1.4rem; }
+.emojiHint { font-family: var(--font-sans); font-size: 0.78rem; color: var(--color-kraft); }
+
+.emojiGrid {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  background: var(--color-pine-dark);
+  border: 1px solid rgba(217, 203, 175, 0.2);
+  border-radius: 10px;
+  padding: var(--space-sm);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  z-index: 50;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.emojiOption {
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 4px;
+}
+.emojiOption:hover { background: rgba(250, 246, 236, 0.1); }
+
+/* ── Ingredientes y pasos ── */
+.ingRow, .stepRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.inputFlex { flex: 1; }
+.inputAmt { width: 90px; flex-shrink: 0; }
+
+.stepNum {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 50%;
+  background: rgba(250, 246, 236, 0.12);
+  color: var(--color-cream);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  color: var(--color-apple);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.addBtn {
+  background: none;
+  border: 1px dashed rgba(217, 203, 175, 0.25);
+  border-radius: 6px;
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-kraft);
+  cursor: pointer;
+  text-align: left;
+}
+
+/* ── Reordenar recetas ── */
+.reorderRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+  margin-bottom: 2px;
+}
+
+.orderBtn {
+  background: rgba(250, 246, 236, 0.08);
+  border: 1px solid rgba(217, 203, 175, 0.2);
+  border-radius: 4px;
+  color: var(--color-cream);
+  font-size: 0.9rem;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orderBtn:disabled { opacity: 0.25; cursor: default; }
+
+/* ── Tags ── */
+.tagsInput {
+  background: rgba(250, 246, 236, 0.08);
+  border: 1px solid rgba(217, 203, 175, 0.2);
+  border-radius: 6px;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--color-cream);
+  outline: none;
+  width: 100%;
+}
+.tagsInput::placeholder { color: rgba(217, 203, 175, 0.35); }
+.tagsHint {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: rgba(217, 203, 175, 0.4);
+}

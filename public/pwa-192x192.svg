@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fondo redondeado color crema -->
+  <rect width="512" height="512" rx="96" fill="#FAF6EC"/>
+  <!-- Patita central en pino oscuro -->
+  <g transform="translate(256,280)" fill="none" stroke="#3E4A3D" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Almohadilla grande -->
+    <ellipse cx="0" cy="0" rx="90" ry="72"/>
+    <!-- Dedito izquierdo superior -->
+    <ellipse cx="-82" cy="-100" rx="34" ry="46" transform="rotate(-18,-82,-100)"/>
+    <!-- Dedito central -->
+    <ellipse cx="-8" cy="-120" rx="34" ry="46"/>
+    <!-- Dedito derecho superior -->
+    <ellipse cx="75" cy="-100" rx="34" ry="46" transform="rotate(18,75,-100)"/>
+    <!-- Dedito pequeño izquierdo -->
+    <ellipse cx="-130" cy="-42" rx="26" ry="34" transform="rotate(-30,-130,-42)"/>
+  </g>
+  <!-- "Recetario" texto pequeño debajo -->
+  <text x="256" y="440" font-family="Georgia,serif" font-size="44" font-weight="bold"
+        fill="#C1443B" text-anchor="middle" letter-spacing="2">Olivia</text>
+</svg>

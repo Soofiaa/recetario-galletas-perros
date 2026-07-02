@@ -1,0 +1,25 @@
+@import './tokens.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-pine-dark);
+  color: var(--color-pine-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Ocultar controles de pantalla al imprimir ── */
+@media print {
+  body {
+    background: white;
+  }
+}

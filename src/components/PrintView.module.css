@@ -1,0 +1,95 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #888;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  background: var(--color-pine-dark);
+  color: var(--color-cream);
+  padding: var(--space-sm) var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-shrink: 0;
+}
+
+.toolbarText {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.toolbarActions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.printBtn,
+.closeBtn {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  padding: var(--space-xs) var(--space-md);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.printBtn {
+  background: var(--color-honey);
+  color: var(--color-pine-dark);
+}
+
+.closeBtn {
+  background: transparent;
+  color: var(--color-cream);
+  border: 1px solid var(--color-kraft-dark);
+}
+
+.pages {
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+  padding: var(--space-xl);
+}
+
+.pageWrapper {
+  width: var(--page-w);
+  height: var(--page-h);
+  box-shadow: var(--shadow-page);
+  flex-shrink: 0;
+}
+
+/* ── Estilos de impresión ── */
+@media print {
+  .overlay {
+    position: static;
+    background: white;
+  }
+
+  .toolbar {
+    display: none;
+  }
+
+  .pages {
+    overflow: visible;
+    padding: 0;
+    gap: 0;
+  }
+
+  .pageWrapper {
+    width: 148mm;
+    height: 210mm;
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+  }
+}
