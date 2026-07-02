@@ -16,6 +16,7 @@ export default function App() {
     favorites, toggleFavorite, isFavorite,
     setNote, getNote,
     incrementView, getViews, getMostViewed, getMostFavorited,
+    customCategories, addCustomCategory, removeCustomCategory,
   } = useLibrary()
 
   const [screen, setScreen]               = useState('library')
@@ -105,6 +106,9 @@ export default function App() {
           onEmptyTrash={emptyTrash}
           getMostViewed={getMostViewed}
           getMostFavorited={getMostFavorited}
+          customCategories={customCategories}
+          onAddCategory={addCustomCategory}
+          onRemoveCategory={removeCustomCategory}
         />
       )}
 
@@ -130,6 +134,7 @@ export default function App() {
         <CreateBook
           onSave={handleCreateSave}
           onCancel={() => setScreen('library')}
+          customCategories={customCategories}
         />
       )}
 
