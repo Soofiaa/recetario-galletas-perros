@@ -3,7 +3,6 @@ import HTMLFlipBook from 'react-pageflip'
 import styles from './FlipBookScreen.module.css'
 import Cover from '../components/Cover'
 import RecipePage from '../components/RecipePage'
-import RecipeImagePage from '../components/RecipeImagePage'
 import PrintView from '../components/PrintView'
 import PrintSelectOverlay from '../components/PrintSelectOverlay'
 import PortionCalculator from '../components/PortionCalculator'
@@ -221,15 +220,6 @@ export default function FlipBookScreen({
           {flipPages.map(entry => {
             const { recipe, recipeNumber } = entry
             const key = `${book.id}:${recipe.id}`
-            if (entry.type === 'photo') {
-              return (
-                <RecipeImagePage
-                  key={`${recipe.id}-photo`}
-                  recipe={recipe}
-                  recipeNumber={recipeNumber}
-                />
-              )
-            }
             return (
               <RecipePage
                 key={recipe.id}

@@ -66,9 +66,6 @@ const RecipePage = React.forwardRef(({
 
       {/* Cuerpo */}
       <div className={styles.body}>
-        {recipe.image && (
-          <img src={recipe.image} alt={recipe.title} className={styles.recipeImage} />
-        )}
         <div className={styles.sectionLabel}>
           Ingredientes · rinde {recipe.yield}
         </div>
@@ -97,6 +94,10 @@ const RecipePage = React.forwardRef(({
             <span className={styles.noteIcon}>📝</span>
             <span className={styles.noteText}>{note}</span>
           </div>
+        )}
+
+        {recipe.image && (
+          <img src={recipe.image} alt={recipe.title} className={styles.recipeImage} />
         )}
       </div>
 
