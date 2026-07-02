@@ -116,9 +116,11 @@ const Cover = React.forwardRef(({ book, coverStyle: cs }, ref) => {
 
       {/* Pie */}
       <div className={styles.bottom}>
-        <div className={styles.footnote} style={{ color: s.titleColor }}>
-          Nunca ofrecer: xilitol, chocolate, uvas/pasas, cebolla, ajo ni nuez de macadamia.
-        </div>
+        {book?.category === 'mascotas' && (
+          <div className={styles.footnote} style={{ color: s.titleColor }}>
+            Nunca ofrecer: xilitol, chocolate, uvas/pasas, cebolla, ajo ni nuez de macadamia.
+          </div>
+        )}
         {s.showDog && (
           <svg className={styles.dogLine} viewBox="0 0 140 70" fill="none" stroke={s.accentColor} strokeWidth="2" aria-hidden="true">
             <path d="M12 55 Q10 30 30 22 Q28 12 40 10 Q46 4 54 10 Q64 6 68 16 Q80 14 82 26 Q98 26 100 40 Q112 40 116 50 Q118 58 108 60 L20 60 Q10 60 12 55 Z"/>

@@ -94,6 +94,7 @@ export default function CreateBook({ onSave, onCancel, customCategories = [], ac
       if (!ok) return
     }
 
+    const isPetBook = bookCategory === 'mascotas'
     onSave({
       id: genId(),
       name: bookName.trim(),
@@ -101,6 +102,7 @@ export default function CreateBook({ onSave, onCancel, customCategories = [], ac
       category: bookCategory,
       createdAt: new Date().toISOString().slice(0, 10),
       recipes: validRecipes,
+      coverStyle: { showPaw: isPetBook, showDog: isPetBook },
     })
   }
 
