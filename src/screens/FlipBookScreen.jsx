@@ -8,6 +8,7 @@ import PrintSelectOverlay from '../components/PrintSelectOverlay'
 import PortionCalculator from '../components/PortionCalculator'
 import SearchOverlay from '../components/SearchOverlay'
 import ShareOverlay from '../components/ShareOverlay'
+import RecipeShareOverlay from '../components/RecipeShareOverlay'
 
 function useBookSize() {
   const [size, setSize] = useState({ width: 360, height: 510 })
@@ -56,6 +57,7 @@ export default function FlipBookScreen({
   const [showPrintSelect, setShowPrintSelect] = useState(false)
   const [searching, setSearching]   = useState(false)
   const [sharing, setSharing]       = useState(null)
+  const [showRecipeShare, setShowRecipeShare] = useState(false)
   const [slideshow, setSlideshow]   = useState(false)
   const [calcRecipe, setCalcRecipe] = useState(null)
   const [showStats, setShowStats]   = useState(false)
@@ -72,13 +74,13 @@ export default function FlipBookScreen({
 
   useEffect(() => {
     function onKey(e) {
-      if (printRecipes !== null || searching || sharing || calcRecipe || showStats) return
+      if (printRecipes !== null || searching || sharing || calcRecipe || showStats || showRecipeShare) return
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') bookRef.current?.pageFlip().flipNext()
       else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') bookRef.current?.pageFlip().flipPrev()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [printRecipes, searching, sharing, calcRecipe, showStats])
+  }, [printRecipes, searching, sharing, calcRecipe, showStats, showRecipeShare])
 
   useEffect(() => {
     if (slideshow) {
@@ -124,7 +126,9 @@ export default function FlipBookScreen({
               <button className={styles.iconBtn}
                 onClick={() => setCalcRecipe(currentRecipe)} title="Calcular porciones">⚖️</button>
               <button className={styles.iconBtn}
-                onClick={() => setSharing(currentRecipe)} title="Compartir receta">↗</button>
+                onClick={() => setSharing(currentRecipe)} title="Compartir en redes">↗</button>
+              <button className={styles.iconBtn}
+                onClick={() => setShowRecipeShare(true)} title="Exportar/Importar receta">📤</button>
             </>
           )}
           <button className={styles.iconBtn}
@@ -246,6 +250,17 @@ export default function FlipBookScreen({
 
       {sharing && (
         <ShareOverlay recipe={sharing} onClose={() => setSharing(null)} />
+      )}
+
+      {showRecipeShare && currentRecipe && (
+        <RecipeShareOverlay
+          recipe={currentRecipe}
+          bookName={book.name}
+          onClose={() => setShowRecipeShare(false)}
+          onImport={(recipe) => {
+            alert(`✅ Receta "${recipe.title}" importada.\n\nPuedes copiarla a otro recetario desde la vista de edición.`)
+          }}
+        />
       )}
     </div>
   )
