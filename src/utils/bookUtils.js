@@ -112,3 +112,23 @@ export const EMOJI_ICONS = [
   '🥜','🧀','🥚','🍗','🐟','🫀','🥩','🦴','🐄','🐔',
   '🧊','🍦','🥛','🧁','🍪','🎂','🥣','🍚','🌾','🫙',
 ]
+
+export async function exportBookAsPDF(book, pdfElement) {
+  try {
+    const html2pdf = (await import('html2pdf.js')).default
+    const filename = `${book.name.replace(/\s+/g, '_')}.pdf`
+
+    const options = {
+      margin: 0,
+      filename,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, allowTaint: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    }
+
+    await html2pdf().set(options).from(pdfElement).save()
+  } catch (err) {
+    console.error('Error exporting PDF:', err)
+    throw new Error(`No se pudo generar el PDF: ${err.message}`)
+  }
+}

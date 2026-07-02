@@ -9,6 +9,8 @@ import PortionCalculator from '../components/PortionCalculator'
 import SearchOverlay from '../components/SearchOverlay'
 import ShareOverlay from '../components/ShareOverlay'
 import RecipeShareOverlay from '../components/RecipeShareOverlay'
+import { PDFExport } from '../components/PDFExport'
+import { exportBookAsPDF } from '../utils/bookUtils'
 
 function useBookSize() {
   const [size, setSize] = useState({ width: 360, height: 510 })
@@ -51,6 +53,7 @@ export default function FlipBookScreen({
   onPageView, getViews, getMostViewed, getMostFavorited,
 }) {
   const bookRef      = useRef(null)
+  const pdfRef       = useRef(null)
   const slideshowRef = useRef(null)
   const [page, setPage]             = useState(0)
   const [printRecipes, setPrintRecipes] = useState(null)  // null = no imprimiendo, [] = imprimiendo
@@ -61,6 +64,7 @@ export default function FlipBookScreen({
   const [slideshow, setSlideshow]   = useState(false)
   const [calcRecipe, setCalcRecipe] = useState(null)
   const [showStats, setShowStats]   = useState(false)
+  const [isExportingPDF, setIsExportingPDF] = useState(false)
   const { width, height } = useBookSize()
   const TOTAL = book.recipes.length + 1
 
@@ -105,6 +109,18 @@ export default function FlipBookScreen({
     }
   }
 
+  async function handleExportPDF() {
+    try {
+      setIsExportingPDF(true)
+      if (!pdfRef.current) throw new Error('PDF no disponible')
+      await exportBookAsPDF(book, pdfRef.current)
+    } catch (err) {
+      alert(`❌ ${err.message}`)
+    } finally {
+      setIsExportingPDF(false)
+    }
+  }
+
   const currentRecipe = page > 0 ? book.recipes[page - 1] : null
   const mostViewed    = getMostViewed?.(book)
   const mostFavorited = getMostFavorited?.(book)
@@ -133,6 +149,8 @@ export default function FlipBookScreen({
           )}
           <button className={styles.iconBtn}
             onClick={() => setShowStats(v => !v)} title="Estadísticas">📊</button>
+          <button className={styles.iconBtn}
+            onClick={handleExportPDF} disabled={isExportingPDF} title="Descargar como PDF">📑</button>
           {onEdit && (
             <button className={styles.iconBtn} onClick={onEdit} title="Editar recetario">✏️</button>
           )}
@@ -262,6 +280,11 @@ export default function FlipBookScreen({
           }}
         />
       )}
+
+      {/* PDF invisible para exportar */}
+      <div style={{ display: 'none' }}>
+        <PDFExport ref={pdfRef} book={book} />
+      </div>
     </div>
   )
 }
