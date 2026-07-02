@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styles from './BookCard.module.css'
 import Cover from './Cover'
 import { exportBookAsJson } from '../utils/bookUtils'
+import { CATEGORIES } from '../hooks/useLibrary'
 
 function formatRelative(isoString) {
   if (!isoString) return null
@@ -14,6 +15,11 @@ function formatRelative(isoString) {
   if (hours < 24) return `hace ${hours} h`
   if (days === 1) return 'ayer'
   return `hace ${days} días`
+}
+
+function getCategoryLabel(categoryValue) {
+  const cat = CATEGORIES.find(c => c.value === categoryValue)
+  return cat ? cat.label.split(' ').slice(1).join(' ') : categoryValue
 }
 
 export default function BookCard({ book, onOpen, onDelete, onDesign, onEdit, onRename, favCount }) {
@@ -33,6 +39,11 @@ export default function BookCard({ book, onOpen, onDelete, onDesign, onEdit, onR
         </div>
         <div className={styles.info}>
           <span className={styles.name}>{book.name}</span>
+          {book.category && (
+            <span className={styles.category}>
+              {getCategoryLabel(book.category)}
+            </span>
+          )}
           <span className={styles.meta}>
             {book.recipes.length} receta{book.recipes.length !== 1 ? 's' : ''} · {book.createdAt}
           </span>

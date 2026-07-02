@@ -1,10 +1,20 @@
 import { useState, useEffect, useCallback } from 'react'
 import { recipes as defaultRecipes } from '../data/recipes'
 
+export const CATEGORIES = [
+  { value: 'mascotas', label: '🐾 Mascotas' },
+  { value: 'almuerzos', label: '🍽️ Almuerzos' },
+  { value: 'onces', label: '☕ Onces' },
+  { value: 'dulces', label: '🍰 Dulces' },
+  { value: 'bebidas', label: '🥤 Bebidas' },
+  { value: 'otros', label: '📝 Otros' },
+]
+
 const DEFAULT_BOOK = {
   id: 'olivia-default',
   name: 'Galletas para Olivia',
   subtitle: 'Edición completa',
+  category: 'mascotas',
   createdAt: '2026-06-30',
   recipes: defaultRecipes,
 }

@@ -67,6 +67,15 @@
   line-height: 1.2;
 }
 
+.category {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--color-apple);
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+}
+
 .meta {
   font-family: var(--font-mono);
   font-size: 0.6rem;

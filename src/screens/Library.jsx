@@ -1,9 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './Library.module.css'
 import BookCard from '../components/BookCard'
 import TrashSection from '../components/TrashSection'
 import { parseHtmlBook } from '../utils/parseHtml'
 import { parseJsonBook } from '../utils/bookUtils'
+import { CATEGORIES } from '../hooks/useLibrary'
 
 export default function Library({
   books, onOpen, onAdd, onDelete, onSearch,
@@ -11,8 +12,13 @@ export default function Library({
   darkMode, onToggleDark, getFavCount,
   trash, onRestore, onPurge, onEmptyTrash,
 }) {
+  const [selectedCategory, setSelectedCategory] = useState(null)
   const htmlInputRef = useRef(null)
   const jsonInputRef = useRef(null)
+
+  const filteredBooks = selectedCategory
+    ? books.filter(b => b.category === selectedCategory)
+    : books
 
   function handleHtmlImport(e) {
     const file = e.target.files[0]
@@ -71,8 +77,26 @@ export default function Library({
         </div>
       </header>
 
+      <div className={styles.categoryFilter}>
+        <button
+          className={`${styles.categoryBtn} ${selectedCategory === null ? styles.categoryBtnActive : ''}`}
+          onClick={() => setSelectedCategory(null)}
+        >
+          📚 Todos
+        </button>
+        {CATEGORIES.map(cat => (
+          <button
+            key={cat.value}
+            className={`${styles.categoryBtn} ${selectedCategory === cat.value ? styles.categoryBtnActive : ''}`}
+            onClick={() => setSelectedCategory(cat.value)}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
       <main className={styles.grid}>
-        {books.map(book => (
+        {filteredBooks.map(book => (
           <BookCard
             key={book.id}
             book={book}

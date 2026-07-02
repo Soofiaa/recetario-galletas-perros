@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styles from './CreateBook.module.css'
 import { genId, EMOJI_ICONS } from '../utils/bookUtils'
+import { CATEGORIES } from '../hooks/useLibrary'
 
 const EMPTY_RECIPE = () => ({
   id: genId(),
@@ -17,6 +18,7 @@ const EMPTY_RECIPE = () => ({
 export default function CreateBook({ onSave, onCancel }) {
   const [bookName, setBookName] = useState('')
   const [bookSubtitle, setBookSubtitle] = useState('')
+  const [bookCategory, setBookCategory] = useState('otros')
   const [recipes, setRecipes] = useState([EMPTY_RECIPE()])
   const [activeIdx, setActiveIdx] = useState(0)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
@@ -94,6 +96,7 @@ export default function CreateBook({ onSave, onCancel }) {
       id: genId(),
       name: bookName.trim(),
       subtitle: bookSubtitle.trim(),
+      category: bookCategory,
       createdAt: new Date().toISOString().slice(0, 10),
       recipes: validRecipes,
     })
@@ -124,6 +127,16 @@ export default function CreateBook({ onSave, onCancel }) {
             value={bookSubtitle}
             onChange={e => setBookSubtitle(e.target.value)}
           />
+          <label className={styles.fieldLabel}>Categoría</label>
+          <select
+            className={styles.select}
+            value={bookCategory}
+            onChange={e => setBookCategory(e.target.value)}
+          >
+            {CATEGORIES.map(cat => (
+              <option key={cat.value} value={cat.value}>{cat.label}</option>
+            ))}
+          </select>
         </section>
 
         {/* Tabs de recetas */}
