@@ -95,6 +95,15 @@
   gap: 4px;
 }
 
+.recipeImage {
+  width: 100%;
+  height: clamp(70px, 18%, 120px);
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .sectionLabel {
   font-family: var(--font-mono);
   font-size: clamp(8px, 2vw, 9.5px);

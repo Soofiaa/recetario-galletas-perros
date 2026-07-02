@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import styles from './CreateBook.module.css'
 import { genId, EMOJI_ICONS } from '../utils/bookUtils'
+import ImageUpload from '../components/ImageUpload'
 
-export default function EditBook({ book, onSave, onCancel }) {
+export default function EditBook({ book, onSave, onCancel, accessCode }) {
   const [bookName, setBookName] = useState(book.name)
   const [bookSubtitle, setBookSubtitle] = useState(book.subtitle || '')
   const [recipes, setRecipes] = useState(book.recipes.map(r => ({ ...r })))
@@ -42,7 +43,7 @@ export default function EditBook({ book, onSave, onCancel }) {
     const r = {
       id: genId(),
       title: '', subtitle: '', category: 'Horneada', extra: '',
-      emoji: '🍪', svgPaths: '',
+      emoji: '🍪', svgPaths: '', image: '',
       yield: '16 galletas',
       ingredients: [{ name: '', amount: '' }],
       steps: [''],
@@ -141,6 +142,13 @@ export default function EditBook({ book, onSave, onCancel }) {
           <label className={styles.fieldLabel}>Subtítulo</label>
           <input className={styles.input} value={recipe.subtitle}
             onChange={e => updateRecipe({ subtitle: e.target.value })} />
+
+          <label className={styles.fieldLabel}>Foto (opcional)</label>
+          <ImageUpload
+            image={recipe.image}
+            onChange={url => updateRecipe({ image: url })}
+            accessCode={accessCode}
+          />
 
           <div className={styles.row}>
             <div className={styles.col}>

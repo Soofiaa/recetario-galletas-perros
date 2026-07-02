@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { recipes as defaultRecipes } from '../data/recipes'
+import { supabase, logAction } from '../lib/supabaseClient'
 
 export const CATEGORIES = [
   { value: 'mascotas', label: '🐾 Mascotas' },
@@ -55,8 +56,39 @@ export function safeSetItem(key, value) {
   }
 }
 
-export function useLibrary() {
+// Convierte una fila de Supabase a un objeto book de la app
+function rowToBook(row) {
+  return {
+    id: row.id,
+    name: row.name,
+    subtitle: row.subtitle || '',
+    category: row.category || 'otros',
+    createdAt: row.created_at,
+    coverStyle: row.cover_style || undefined,
+    recipes: row.recipes || [],
+  }
+}
+
+// Convierte un book de la app a una fila de Supabase
+function bookToRow(book, accessCode) {
+  return {
+    id: book.id,
+    access_code: accessCode,
+    name: book.name,
+    subtitle: book.subtitle || '',
+    category: book.category || 'otros',
+    created_at: book.createdAt,
+    cover_style: book.coverStyle || null,
+    recipes: book.recipes || [],
+    updated_at: new Date().toISOString(),
+  }
+}
+
+export function useLibrary(accessCode) {
   const [books, setBooks] = useState(() => load('recetario_books', [DEFAULT_BOOK]))
+  const [syncing, setSyncing] = useState(false)
+  const [syncError, setSyncError] = useState(null)
+  const hasSeeded = useRef(false)
   const [trash, setTrash] = useState(() => {
     const saved = load('recetario_trash', [])
     return saved.filter(b => !isExpired(b.deletedAt))
@@ -65,6 +97,47 @@ export function useLibrary() {
   const [favorites, setFavorites] = useState(() => new Set(load('recetario_favorites', [])))
   const [notes, setNotes]   = useState(() => load('recetario_notes', {}))
   const [views, setViews]   = useState(() => load('recetario_views', {}))
+
+  // ── Sincronización con la nube (por código de acceso) ──────────────────────
+  useEffect(() => {
+    if (!accessCode) return
+    let cancelled = false
+
+    async function sync() {
+      setSyncing(true)
+      setSyncError(null)
+      try {
+        const { data, error } = await supabase
+          .from('recetario_books')
+          .select('*')
+          .eq('access_code', accessCode)
+          .order('updated_at', { ascending: true })
+
+        if (error) throw error
+        if (cancelled) return
+
+        if (data.length === 0 && !hasSeeded.current) {
+          // Primera vez con este código: subir los libros locales como semilla
+          hasSeeded.current = true
+          const localBooks = load('recetario_books', [DEFAULT_BOOK])
+          const rows = localBooks.map(b => bookToRow(b, accessCode))
+          const { error: seedError } = await supabase.from('recetario_books').insert(rows)
+          if (seedError) throw seedError
+          setBooks(localBooks)
+          await logAction(accessCode, 'seed', `${localBooks.length} recetario(s)`)
+        } else {
+          setBooks(data.map(rowToBook))
+        }
+      } catch (err) {
+        if (!cancelled) setSyncError(err.message)
+      } finally {
+        if (!cancelled) setSyncing(false)
+      }
+    }
+
+    sync()
+    return () => { cancelled = true }
+  }, [accessCode])
 
   useEffect(() => {
     safeSetItem('recetario_books', JSON.stringify(books))
@@ -108,9 +181,28 @@ export function useLibrary() {
   }, [customCategories])
 
   // ── Libros ────────────────────────────────────────────────────────────────
-  const addBook    = useCallback((book) => setBooks(prev => [...prev, book]), [])
-  const updateBook = useCallback((id, data) =>
-    setBooks(prev => prev.map(b => b.id === id ? { ...b, ...data } : b)), [])
+  const addBook = useCallback((book) => {
+    setBooks(prev => [...prev, book])
+    if (accessCode) {
+      supabase.from('recetario_books').insert(bookToRow(book, accessCode))
+        .then(({ error }) => { if (error) setSyncError(error.message) })
+      logAction(accessCode, 'add_book', book.name)
+    }
+  }, [accessCode])
+
+  const updateBook = useCallback((id, data) => {
+    setBooks(prev => {
+      const next = prev.map(b => b.id === id ? { ...b, ...data } : b)
+      if (accessCode) {
+        const updated = next.find(b => b.id === id)
+        supabase.from('recetario_books')
+          .update(bookToRow(updated, accessCode))
+          .eq('id', id).eq('access_code', accessCode)
+          .then(({ error }) => { if (error) setSyncError(error.message) })
+      }
+      return next
+    })
+  }, [accessCode])
 
   // Soft-delete: mueve a la papelera con fecha
   const deleteBook = useCallback((id) => {
@@ -119,7 +211,12 @@ export function useLibrary() {
       if (book) setTrash(t => [...t, { ...book, deletedAt: new Date().toISOString() }])
       return prev.filter(b => b.id !== id)
     })
-  }, [])
+    if (accessCode) {
+      supabase.from('recetario_books').delete().eq('id', id).eq('access_code', accessCode)
+        .then(({ error }) => { if (error) setSyncError(error.message) })
+      logAction(accessCode, 'delete_book', id)
+    }
+  }, [accessCode])
 
   // Restaurar desde papelera
   const restoreBook = useCallback((id) => {
@@ -128,10 +225,14 @@ export function useLibrary() {
       if (book) {
         const { deletedAt: _, ...restored } = book
         setBooks(b => [...b, restored])
+        if (accessCode) {
+          supabase.from('recetario_books').insert(bookToRow(restored, accessCode))
+            .then(({ error }) => { if (error) setSyncError(error.message) })
+        }
       }
       return prev.filter(b => b.id !== id)
     })
-  }, [])
+  }, [accessCode])
 
   const purgeBook  = useCallback((id) => setTrash(prev => prev.filter(b => b.id !== id)), [])
   const emptyTrash = useCallback(() => setTrash([]), [])
@@ -190,5 +291,6 @@ export function useLibrary() {
     setNote, getNote,
     incrementView, getViews, getMostViewed, getMostFavorited,
     customCategories, addCustomCategory, removeCustomCategory, getAllCategories,
+    syncing, syncError,
   }
 }

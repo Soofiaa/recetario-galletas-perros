@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import styles from './CreateBook.module.css'
 import { genId, EMOJI_ICONS } from '../utils/bookUtils'
 import { CATEGORIES } from '../hooks/useLibrary'
+import ImageUpload from '../components/ImageUpload'
 
 const EMPTY_RECIPE = () => ({
   id: genId(),
   title: '', subtitle: '', category: 'Horneada', extra: '',
-  emoji: '🍪', svgPaths: '',
+  emoji: '🍪', svgPaths: '', image: '',
   yield: '16 galletas',
   ingredients: [{ name: '', amount: '' }],
   steps: [''],
@@ -15,7 +16,7 @@ const EMPTY_RECIPE = () => ({
   tags: [],
 })
 
-export default function CreateBook({ onSave, onCancel, customCategories = [] }) {
+export default function CreateBook({ onSave, onCancel, customCategories = [], accessCode }) {
   const [bookName, setBookName] = useState('')
   const [bookSubtitle, setBookSubtitle] = useState('')
   const [bookCategory, setBookCategory] = useState('otros')
@@ -186,6 +187,13 @@ export default function CreateBook({ onSave, onCancel, customCategories = [] }) 
           <label className={styles.fieldLabel}>Subtítulo</label>
           <input className={styles.input} placeholder="Ej: La favorita del verano"
             value={recipe.subtitle} onChange={e => updateRecipe({ subtitle: e.target.value })} />
+
+          <label className={styles.fieldLabel}>Foto (opcional)</label>
+          <ImageUpload
+            image={recipe.image}
+            onChange={url => updateRecipe({ image: url })}
+            accessCode={accessCode}
+          />
 
           <div className={styles.row}>
             <div className={styles.col}>

@@ -38,6 +38,10 @@ export const PDFExport = React.forwardRef(({ book }, ref) => {
             </div>
 
             <div className={styles.recipeContent}>
+              {recipe.image && (
+                <img src={recipe.image} alt={recipe.title} className={styles.recipeImage} crossOrigin="anonymous" />
+              )}
+
               {/* Rinde y categoría */}
               <div className={styles.recipeInfo}>
                 {recipe.yield && <span className={styles.yield}>{recipe.yield}</span>}

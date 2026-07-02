@@ -27,6 +27,7 @@ const RECIPE_DEFAULTS = {
   duration:    { line1: '', line2: '' },
   note:        '',
   tags:        [],
+  image:       '',
 }
 
 function normalizeRecipe(raw, index) {

@@ -5,11 +5,16 @@ import FlipBookScreen from './screens/FlipBookScreen'
 import CreateBook from './screens/CreateBook'
 import EditBook from './screens/EditBook'
 import CoverDesigner from './screens/CoverDesigner'
+import AccessCodeScreen from './screens/AccessCodeScreen'
 import SearchOverlay from './components/SearchOverlay'
 import FavoritesOverlay from './components/FavoritesOverlay'
 import QuotaToast from './components/QuotaToast'
 
 export default function App() {
+  const [accessCode, setAccessCode] = useState(
+    () => localStorage.getItem('recetario_access_code') || null
+  )
+
   const {
     books, addBook, deleteBook, updateBook, markOpened,
     trash, restoreBook, purgeBook, emptyTrash,
@@ -17,7 +22,8 @@ export default function App() {
     setNote, getNote,
     incrementView, getViews, getMostViewed, getMostFavorited,
     customCategories, addCustomCategory, removeCustomCategory,
-  } = useLibrary()
+    syncing, syncError,
+  } = useLibrary(accessCode)
 
   const [screen, setScreen]               = useState('library')
   const [currentBook, setCurrentBook]     = useState(null)
@@ -84,8 +90,27 @@ export default function App() {
     ? (books.find(b => b.id === currentBook.id) || currentBook)
     : null
 
+  function handleAccessCode(code) {
+    localStorage.setItem('recetario_access_code', code)
+    setAccessCode(code)
+  }
+
+  if (!accessCode) {
+    return <AccessCodeScreen onSubmit={handleAccessCode} />
+  }
+
   return (
     <>
+      {syncError && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
+          background: '#c1443b', color: 'white', padding: '8px 16px',
+          fontSize: '0.8rem', textAlign: 'center', fontFamily: 'monospace',
+        }}>
+          ⚠️ Error de sincronización: {syncError}
+        </div>
+      )}
+
       {screen === 'library' && (
         <Library
           books={books}
@@ -135,6 +160,7 @@ export default function App() {
           onSave={handleCreateSave}
           onCancel={() => setScreen('library')}
           customCategories={customCategories}
+          accessCode={accessCode}
         />
       )}
 
@@ -146,6 +172,7 @@ export default function App() {
             setEditingBook(null)
             setScreen(currentBook ? 'flipbook' : 'library')
           }}
+          accessCode={accessCode}
         />
       )}
 
