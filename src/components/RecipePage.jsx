@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import styles from './RecipePage.module.css'
 import NoteOverlay from './NoteOverlay'
+import { sanitizeSvgPaths } from '../utils/sanitizeSvg'
 
 const RecipePage = React.forwardRef(({
   recipe, pageNumber,
@@ -9,6 +10,9 @@ const RecipePage = React.forwardRef(({
 }, ref) => {
   const [showNote, setShowNote] = useState(false)
   const tabLabel = `Receta ${String(pageNumber - 1).padStart(2, '0')} · ${recipe.category}${recipe.extra ? ` · ${recipe.extra}` : ''}`
+  // Defensa en profundidad: sanitizar de nuevo antes de inyectar al DOM,
+  // por si el dato ya estaba guardado de antes de validarse en el import.
+  const safeSvgPaths = useMemo(() => sanitizeSvgPaths(recipe.svgPaths), [recipe.svgPaths])
 
   return (
     <div ref={ref} className={styles.page}>
@@ -17,7 +21,7 @@ const RecipePage = React.forwardRef(({
         <svg
           viewBox="0 0 24 24" fill="none" strokeWidth="1.8" stroke="currentColor"
           className={styles.tabIcon}
-          dangerouslySetInnerHTML={{ __html: recipe.svgPaths || '' }}
+          dangerouslySetInnerHTML={{ __html: safeSvgPaths }}
         />
         {tabLabel}
       </div>
@@ -50,7 +54,7 @@ const RecipePage = React.forwardRef(({
               viewBox="0 0 24 24" fill="none"
               stroke="var(--color-pine-dark)" strokeWidth="1.6"
               className={styles.icon}
-              dangerouslySetInnerHTML={{ __html: recipe.svgPaths || '' }}
+              dangerouslySetInnerHTML={{ __html: safeSvgPaths }}
             />
           )}
         </div>

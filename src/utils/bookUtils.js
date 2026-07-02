@@ -1,3 +1,5 @@
+import { sanitizeSvgPaths } from './sanitizeSvg'
+
 export function genId() {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36)
 }
@@ -61,6 +63,8 @@ function normalizeRecipe(raw, index) {
   }
   // Fallback de id
   if (!out.id) out.id = `r${index + 1}-${Date.now()}`
+  // Sanitizar svgPaths: bloquea XSS en recetas importadas desde JSON no confiable
+  out.svgPaths = sanitizeSvgPaths(out.svgPaths)
   return out
 }
 

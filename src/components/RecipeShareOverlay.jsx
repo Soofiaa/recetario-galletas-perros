@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import styles from './RecipeShareOverlay.module.css'
+import { sanitizeSvgPaths } from '../utils/sanitizeSvg'
 
 export default function RecipeShareOverlay({ recipe, bookName, onClose, onImport }) {
   const [copied, setCopied] = useState(false)
@@ -37,7 +38,7 @@ export default function RecipeShareOverlay({ recipe, bookName, onClose, onImport
       if (!imported.title || !Array.isArray(imported.ingredients) || !Array.isArray(imported.steps)) {
         throw new Error('Formato de receta inválido')
       }
-      onImport(imported)
+      onImport({ ...imported, svgPaths: sanitizeSvgPaths(imported.svgPaths) })
       onClose()
     } catch (err) {
       setImportError(err.message)

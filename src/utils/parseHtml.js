@@ -1,4 +1,5 @@
 import { genId } from './bookUtils'
+import { sanitizeSvgPaths } from './sanitizeSvg'
 
 // Convierte el HTML del formato original (recetario_olivia_completo.html) en un objeto Book.
 //
@@ -80,9 +81,9 @@ export function parseHtmlBook(htmlString) {
       return
     }
 
-    // SVG del ícono
+    // SVG del ícono (sanitizado: solo formas geométricas, sin scripts/eventos)
     const iconSvgEl = card.querySelector('.card-icon svg')
-    const svgPaths  = iconSvgEl?.innerHTML?.trim() || ''
+    const svgPaths  = sanitizeSvgPaths(iconSvgEl?.innerHTML?.trim() || '')
 
     // Rendimiento
     const firstLabel = card.querySelector('.section-label')?.textContent || ''

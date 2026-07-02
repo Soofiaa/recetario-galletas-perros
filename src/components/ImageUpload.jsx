@@ -2,6 +2,10 @@ import React, { useState, useRef } from 'react'
 import styles from './ImageUpload.module.css'
 import { supabase } from '../lib/supabaseClient'
 
+// Solo formatos rasterizados: excluye SVG (puede contener <script> embebido)
+const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+const ALLOWED_EXT = /\.(jpe?g|png|webp|gif)$/i
+
 export default function ImageUpload({ image, onChange, accessCode }) {
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
@@ -12,8 +16,8 @@ export default function ImageUpload({ image, onChange, accessCode }) {
     if (!file) return
     e.target.value = ''
 
-    if (!file.type.startsWith('image/')) {
-      setError('El archivo debe ser una imagen')
+    if (!ALLOWED_TYPES.has(file.type) || !ALLOWED_EXT.test(file.name)) {
+      setError('Formato no soportado. Usá JPG, PNG, WEBP o GIF.')
       return
     }
     if (file.size > 5 * 1024 * 1024) {
@@ -24,7 +28,7 @@ export default function ImageUpload({ image, onChange, accessCode }) {
     setUploading(true)
     setError('')
     try {
-      const ext = file.name.split('.').pop()
+      const ext = file.name.split('.').pop().toLowerCase()
       const path = `${accessCode || 'sin-codigo'}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
 
       const { error: uploadError } = await supabase.storage
@@ -67,7 +71,7 @@ export default function ImageUpload({ image, onChange, accessCode }) {
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/png,image/webp,image/gif"
         style={{ display: 'none' }}
         onChange={handleFile}
       />
