@@ -11,10 +11,15 @@ export default function Library({
   onDesign, onEdit, onRename, onShowFavs,
   darkMode, onToggleDark, getFavCount,
   trash, onRestore, onPurge, onEmptyTrash,
+  customCategories = [], onAddCategory, onRemoveCategory,
 }) {
   const [selectedCategory, setSelectedCategory] = useState(null)
+  const [showNewCategory, setShowNewCategory] = useState(false)
+  const [newCategoryLabel, setNewCategoryLabel] = useState('')
+  const [newCategoryEmoji, setNewCategoryEmoji] = useState('📚')
   const htmlInputRef = useRef(null)
   const jsonInputRef = useRef(null)
+  const allCategories = [...CATEGORIES, ...customCategories]
 
   const filteredBooks = selectedCategory
     ? books.filter(b => b.category === selectedCategory)
@@ -58,6 +63,17 @@ export default function Library({
     e.target.value = ''
   }
 
+  function handleAddCategory() {
+    if (!newCategoryLabel.trim()) {
+      alert('La categoría necesita un nombre')
+      return
+    }
+    onAddCategory(newCategoryLabel.trim(), newCategoryEmoji)
+    setNewCategoryLabel('')
+    setNewCategoryEmoji('📚')
+    setShowNewCategory(false)
+  }
+
   return (
     <div className={styles.shell}>
       <header className={styles.header}>
@@ -84,16 +100,63 @@ export default function Library({
         >
           📚 Todos
         </button>
-        {CATEGORIES.map(cat => (
-          <button
-            key={cat.value}
-            className={`${styles.categoryBtn} ${selectedCategory === cat.value ? styles.categoryBtnActive : ''}`}
-            onClick={() => setSelectedCategory(cat.value)}
-          >
-            {cat.label}
-          </button>
+        {allCategories.map(cat => (
+          <div key={cat.value} className={styles.categoryBtnContainer}>
+            <button
+              className={`${styles.categoryBtn} ${selectedCategory === cat.value ? styles.categoryBtnActive : ''}`}
+              onClick={() => setSelectedCategory(cat.value)}
+            >
+              {cat.label}
+            </button>
+            {customCategories.some(c => c.value === cat.value) && (
+              <button
+                className={styles.removeCategoryBtn}
+                onClick={() => onRemoveCategory?.(cat.value)}
+                title="Eliminar categoría"
+              >✕</button>
+            )}
+          </div>
         ))}
+        <button
+          className={styles.addCategoryBtn}
+          onClick={() => setShowNewCategory(true)}
+          title="Crear nueva categoría"
+        >+ Categoría</button>
       </div>
+
+      {showNewCategory && (
+        <div className={styles.newCategoryPanel}>
+          <div className={styles.newCategoryForm}>
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Ej: Galletas, Queques, Comidas"
+              value={newCategoryLabel}
+              onChange={e => setNewCategoryLabel(e.target.value)}
+              onKeyPress={e => e.key === 'Enter' && handleAddCategory()}
+              autoFocus
+            />
+            <select
+              className={styles.select}
+              value={newCategoryEmoji}
+              onChange={e => setNewCategoryEmoji(e.target.value)}
+            >
+              <option value="📚">📚 Libro</option>
+              <option value="🍪">🍪 Galleta</option>
+              <option value="🎂">🎂 Queque</option>
+              <option value="🍲">🍲 Comida</option>
+              <option value="🍰">🍰 Postre</option>
+              <option value="🥗">🥗 Ensalada</option>
+              <option value="🍞">🍞 Pan</option>
+              <option value="🍝">🍝 Pasta</option>
+              <option value="🍕">🍕 Pizza</option>
+              <option value="🥘">🥘 Estofado</option>
+            </select>
+            <button className={styles.saveCategoryBtn} onClick={handleAddCategory}>✓ Crear</button>
+            <button className={styles.cancelCategoryBtn} onClick={() => setShowNewCategory(false)}>✕ Cancelar</button>
+          </div>
+        </div>
+      )}
 
       <main className={styles.grid}>
         {filteredBooks.map(book => (

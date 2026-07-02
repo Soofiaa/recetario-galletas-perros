@@ -61,6 +61,7 @@ export function useLibrary() {
     const saved = load('recetario_trash', [])
     return saved.filter(b => !isExpired(b.deletedAt))
   })
+  const [customCategories, setCustomCategories] = useState(() => load('recetario_custom_categories', []))
   const [favorites, setFavorites] = useState(() => new Set(load('recetario_favorites', [])))
   const [notes, setNotes]   = useState(() => load('recetario_notes', {}))
   const [views, setViews]   = useState(() => load('recetario_views', {}))
@@ -84,6 +85,27 @@ export function useLibrary() {
   useEffect(() => {
     safeSetItem('recetario_views', JSON.stringify(views))
   }, [views])
+
+  useEffect(() => {
+    safeSetItem('recetario_custom_categories', JSON.stringify(customCategories))
+  }, [customCategories])
+
+  // ── Categorías personalizadas ──────────────────────────────────────────────
+  const addCustomCategory = useCallback((label, emoji = '📚') => {
+    const value = label.toLowerCase().replace(/\s+/g, '_')
+    setCustomCategories(prev => {
+      if (prev.some(c => c.value === value)) return prev
+      return [...prev, { value, label: `${emoji} ${label}` }]
+    })
+  }, [])
+
+  const removeCustomCategory = useCallback((value) => {
+    setCustomCategories(prev => prev.filter(c => c.value !== value))
+  }, [])
+
+  const getAllCategories = useCallback(() => {
+    return [...CATEGORIES, ...customCategories]
+  }, [customCategories])
 
   // ── Libros ────────────────────────────────────────────────────────────────
   const addBook    = useCallback((book) => setBooks(prev => [...prev, book]), [])
@@ -167,5 +189,6 @@ export function useLibrary() {
     favorites, toggleFavorite, isFavorite,
     setNote, getNote,
     incrementView, getViews, getMostViewed, getMostFavorited,
+    customCategories, addCustomCategory, removeCustomCategory, getAllCategories,
   }
 }

@@ -146,6 +146,120 @@
   font-weight: 600;
 }
 
+.categoryBtnContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.removeCategoryBtn {
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  background: var(--color-apple);
+  border: none;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.categoryBtnContainer:hover .removeCategoryBtn {
+  opacity: 1;
+}
+
+.addCategoryBtn {
+  background: rgba(250, 246, 236, 0.08);
+  border: 1px dashed rgba(217, 203, 175, 0.3);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--color-cream);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.addCategoryBtn:hover {
+  background: rgba(250, 246, 236, 0.15);
+  border-color: rgba(217, 203, 175, 0.4);
+}
+
+.newCategoryPanel {
+  padding: var(--space-sm) var(--space-lg);
+  background: rgba(62, 74, 61, 0.05);
+  border-bottom: 1px solid rgba(217, 203, 175, 0.08);
+}
+
+.newCategoryForm {
+  display: flex;
+  gap: var(--space-xs);
+  max-width: 500px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.newCategoryForm .input,
+.newCategoryForm .select {
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  border: 1px solid rgba(62, 74, 61, 0.2);
+  border-radius: 4px;
+  background: var(--color-cream);
+  color: var(--color-pine-dark);
+  font-family: var(--font-sans);
+}
+
+.newCategoryForm .input {
+  flex: 1;
+  min-width: 150px;
+}
+
+.newCategoryForm .select {
+  min-width: 100px;
+}
+
+.saveCategoryBtn {
+  background: var(--color-apple);
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.saveCategoryBtn:hover {
+  background: #a13030;
+}
+
+.cancelCategoryBtn {
+  background: rgba(250, 246, 236, 0.1);
+  border: 1px solid rgba(217, 203, 175, 0.2);
+  color: var(--color-cream);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.cancelCategoryBtn:hover {
+  background: rgba(250, 246, 236, 0.15);
+}
+
 /* ── Footer de importación ── */
 .footer {
   display: flex;

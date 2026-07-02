@@ -15,13 +15,14 @@ const EMPTY_RECIPE = () => ({
   tags: [],
 })
 
-export default function CreateBook({ onSave, onCancel }) {
+export default function CreateBook({ onSave, onCancel, customCategories = [] }) {
   const [bookName, setBookName] = useState('')
   const [bookSubtitle, setBookSubtitle] = useState('')
   const [bookCategory, setBookCategory] = useState('otros')
   const [recipes, setRecipes] = useState([EMPTY_RECIPE()])
   const [activeIdx, setActiveIdx] = useState(0)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+  const allCategories = [...CATEGORIES, ...customCategories]
 
   const recipe = recipes[activeIdx]
 
@@ -133,7 +134,7 @@ export default function CreateBook({ onSave, onCancel }) {
             value={bookCategory}
             onChange={e => setBookCategory(e.target.value)}
           >
-            {CATEGORIES.map(cat => (
+            {allCategories.map(cat => (
               <option key={cat.value} value={cat.value}>{cat.label}</option>
             ))}
           </select>
