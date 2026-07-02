@@ -5,6 +5,7 @@ import { sanitizeSvgPaths } from '../utils/sanitizeSvg'
 
 const RecipePage = React.forwardRef(({
   recipe, recipeNumber,
+  showImageInline = false,
   isFavorite, onToggleFavorite,
   note, onSaveNote,
 }, ref) => {
@@ -96,6 +97,9 @@ const RecipePage = React.forwardRef(({
           </div>
         )}
 
+        {showImageInline && recipe.image && (
+          <img src={recipe.image} alt={recipe.title} className={styles.recipeImage} />
+        )}
       </div>
 
       {/* Etiquetas */}

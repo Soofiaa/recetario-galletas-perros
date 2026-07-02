@@ -96,6 +96,17 @@
   gap: 4px;
 }
 
+.recipeImage {
+  width: min(80%, 360px);
+  height: clamp(64px, 16vw, 96px);
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 8px auto 0;
+  border: 1px solid rgba(62, 74, 61, 0.14);
+  box-shadow: 0 8px 18px rgba(43, 52, 42, 0.14);
+}
+
 .sectionLabel {
   font-family: var(--font-mono);
   font-size: clamp(8px, 2vw, 9.5px);

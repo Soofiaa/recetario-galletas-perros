@@ -235,6 +235,7 @@ export default function FlipBookScreen({
                 key={recipe.id}
                 recipe={recipe}
                 recipeNumber={recipeNumber}
+                showImageInline={entry.showImageInline}
                 isFavorite={isFavorite(key)}
                 onToggleFavorite={() => onToggleFavorite(key)}
                 note={getNote(key)}
