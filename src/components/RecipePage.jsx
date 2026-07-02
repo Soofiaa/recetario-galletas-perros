@@ -4,12 +4,12 @@ import NoteOverlay from './NoteOverlay'
 import { sanitizeSvgPaths } from '../utils/sanitizeSvg'
 
 const RecipePage = React.forwardRef(({
-  recipe, pageNumber,
+  recipe, recipeNumber,
   isFavorite, onToggleFavorite,
   note, onSaveNote,
 }, ref) => {
   const [showNote, setShowNote] = useState(false)
-  const tabLabel = `Receta ${String(pageNumber - 1).padStart(2, '0')} · ${recipe.category}${recipe.extra ? ` · ${recipe.extra}` : ''}`
+  const tabLabel = `Receta ${String(recipeNumber).padStart(2, '0')} · ${recipe.category}${recipe.extra ? ` · ${recipe.extra}` : ''}`
   // Defensa en profundidad: sanitizar de nuevo antes de inyectar al DOM,
   // por si el dato ya estaba guardado de antes de validarse en el import.
   const safeSvgPaths = useMemo(() => sanitizeSvgPaths(recipe.svgPaths), [recipe.svgPaths])

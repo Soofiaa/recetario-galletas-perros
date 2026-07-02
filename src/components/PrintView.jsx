@@ -22,7 +22,7 @@ export default function PrintView({ book, onClose }) {
           <div key={recipe.id} className={styles.pageWrapper}>
             <RecipePage
               recipe={recipe}
-              pageNumber={i + 2}
+              recipeNumber={i + 1}
               isFavorite={false}
               onToggleFavorite={() => {}}
               note=""

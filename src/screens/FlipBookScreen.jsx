@@ -1,8 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useMemo } from 'react'
 import HTMLFlipBook from 'react-pageflip'
 import styles from './FlipBookScreen.module.css'
 import Cover from '../components/Cover'
 import RecipePage from '../components/RecipePage'
+import RecipeImagePage from '../components/RecipeImagePage'
 import PrintView from '../components/PrintView'
 import PrintSelectOverlay from '../components/PrintSelectOverlay'
 import PortionCalculator from '../components/PortionCalculator'
@@ -11,6 +12,7 @@ import ShareOverlay from '../components/ShareOverlay'
 import RecipeShareOverlay from '../components/RecipeShareOverlay'
 import { PDFExport } from '../components/PDFExport'
 import { exportBookAsPDF } from '../utils/bookUtils'
+import { buildFlipPages } from '../utils/flipPages'
 
 function useBookSize() {
   const [size, setSize] = useState({ width: 360, height: 510 })
@@ -66,12 +68,14 @@ export default function FlipBookScreen({
   const [showStats, setShowStats]   = useState(false)
   const [isExportingPDF, setIsExportingPDF] = useState(false)
   const { width, height } = useBookSize()
-  const TOTAL = book.recipes.length + 1
+  const flipPages = useMemo(() => buildFlipPages(book.recipes), [book.recipes])
+  const TOTAL = flipPages.length + 1
 
-  // Registrar vista cuando cambia la página a una receta
+  // Registrar vista cuando cambia la página a una receta (no en páginas de foto)
   useEffect(() => {
-    if (page > 0 && book.recipes[page - 1]) {
-      const key = `${book.id}:${book.recipes[page - 1].id}`
+    const entry = page > 0 ? flipPages[page - 1] : null
+    if (entry?.type === 'recipe') {
+      const key = `${book.id}:${entry.recipe.id}`
       onPageView?.(key)
     }
   }, [page]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -121,7 +125,7 @@ export default function FlipBookScreen({
     }
   }
 
-  const currentRecipe = page > 0 ? book.recipes[page - 1] : null
+  const currentRecipe = page > 0 ? flipPages[page - 1]?.recipe ?? null : null
   const mostViewed    = getMostViewed?.(book)
   const mostFavorited = getMostFavorited?.(book)
 
@@ -214,13 +218,23 @@ export default function FlipBookScreen({
           onFlip={e => setPage(e.data)}
         >
           <Cover book={book} coverStyle={book.coverStyle} />
-          {book.recipes.map((recipe, i) => {
+          {flipPages.map(entry => {
+            const { recipe, recipeNumber } = entry
             const key = `${book.id}:${recipe.id}`
+            if (entry.type === 'photo') {
+              return (
+                <RecipeImagePage
+                  key={`${recipe.id}-photo`}
+                  recipe={recipe}
+                  recipeNumber={recipeNumber}
+                />
+              )
+            }
             return (
               <RecipePage
                 key={recipe.id}
                 recipe={recipe}
-                pageNumber={i + 2}
+                recipeNumber={recipeNumber}
                 isFavorite={isFavorite(key)}
                 onToggleFavorite={() => onToggleFavorite(key)}
                 note={getNote(key)}

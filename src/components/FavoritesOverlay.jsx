@@ -1,12 +1,13 @@
 import React from 'react'
 import styles from './FavoritesOverlay.module.css'
+import { getRecipePageNumber } from '../utils/flipPages'
 
 export default function FavoritesOverlay({ books, favorites, onGoTo, onClose }) {
   const favs = []
   books.forEach(book => {
-    book.recipes.forEach((recipe, i) => {
+    book.recipes.forEach(recipe => {
       if (favorites.has(`${book.id}:${recipe.id}`)) {
-        favs.push({ book, recipe, pageIndex: i + 1 })
+        favs.push({ book, recipe, pageIndex: getRecipePageNumber(book.recipes, recipe.id) })
       }
     })
   })

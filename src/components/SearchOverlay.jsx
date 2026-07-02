@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react'
 import styles from './SearchOverlay.module.css'
+import { getRecipePageNumber } from '../utils/flipPages'
 
 const CATS = ['Todas', 'Horneada', 'Deshidratada', 'Congelada']
 
@@ -14,7 +15,7 @@ export default function SearchOverlay({ books, onGoTo, onClose }) {
     const q = query.toLowerCase().trim()
     const out = []
     books.forEach(book => {
-      book.recipes.forEach((recipe, i) => {
+      book.recipes.forEach(recipe => {
         if (cat !== 'Todas' && recipe.category !== cat) return
         const haystack = [
           recipe.title, recipe.subtitle,
@@ -23,7 +24,7 @@ export default function SearchOverlay({ books, onGoTo, onClose }) {
           ...(recipe.tags || []),
         ].join(' ').toLowerCase()
         if (!q || haystack.includes(q)) {
-          out.push({ book, recipe, pageIndex: i + 1 })
+          out.push({ book, recipe, pageIndex: getRecipePageNumber(book.recipes, recipe.id) })
         }
       })
     })
