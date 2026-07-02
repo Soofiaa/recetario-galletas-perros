@@ -89,6 +89,7 @@
 .body {
   padding: clamp(8px, 3%, 20px) clamp(12px, 6%, 34px) clamp(4px, 1.5%, 12px);
   flex: 1;
+  min-height: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -97,7 +98,8 @@
 
 .recipeImage {
   width: 100%;
-  height: clamp(70px, 18%, 120px);
+  height: clamp(60px, 16vw, 100px);
+  flex-shrink: 0;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 6px;
