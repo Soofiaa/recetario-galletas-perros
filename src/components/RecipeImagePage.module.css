@@ -1,0 +1,72 @@
+.page {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-cream);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: clamp(12px, 4%, 24px);
+  padding: clamp(38px, 10%, 58px) clamp(20px, 8%, 48px) clamp(22px, 8%, 44px);
+}
+
+.tab {
+  position: absolute;
+  top: 0;
+  left: clamp(10px, 5%, 38px);
+  background: var(--color-pine-dark);
+  color: var(--color-cream);
+  padding: 5px 12px 7px;
+  border-radius: 0 0 8px 8px;
+  font-family: var(--font-mono);
+  font-size: clamp(8px, 2vw, 10px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.caption {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(14px, 4.5vw, 21px);
+  color: var(--color-pine-dark);
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(8.5px, 2.2vw, 10.5px);
+  color: var(--color-apple);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.photoFrame {
+  width: min(80%, 420px);
+  margin: 0 auto;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(217, 203, 175, 0.26);
+  border: 1px solid rgba(62, 74, 61, 0.14);
+  box-shadow: 0 12px 26px rgba(43, 52, 42, 0.16);
+  flex-shrink: 0;
+}
+
+.recipeImage {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}

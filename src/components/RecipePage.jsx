@@ -96,9 +96,6 @@ const RecipePage = React.forwardRef(({
           </div>
         )}
 
-        {recipe.image && (
-          <img src={recipe.image} alt={recipe.title} className={styles.recipeImage} />
-        )}
       </div>
 
       {/* Etiquetas */}
