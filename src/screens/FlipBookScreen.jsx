@@ -12,7 +12,7 @@ import ShareOverlay from '../components/ShareOverlay'
 import RecipeShareOverlay from '../components/RecipeShareOverlay'
 import { PDFExport } from '../components/PDFExport'
 import { exportBookAsPDF } from '../utils/bookUtils'
-import { buildFlipPages } from '../utils/flipPages'
+import { buildFlipPages, photoFitsOnCover } from '../utils/flipPages'
 
 function useBookSize() {
   const [size, setSize] = useState({ width: 360, height: 510 })
@@ -68,7 +68,14 @@ export default function FlipBookScreen({
   const [showStats, setShowStats]   = useState(false)
   const [isExportingPDF, setIsExportingPDF] = useState(false)
   const { width, height } = useBookSize()
-  const flipPages = useMemo(() => buildFlipPages(book.recipes), [book.recipes])
+  const coverPhotoRecipe = useMemo(
+    () => photoFitsOnCover(book.recipes) ? book.recipes[0] : null,
+    [book.recipes]
+  )
+  const flipPages = useMemo(
+    () => buildFlipPages(book.recipes, { coverPhotoRecipeId: coverPhotoRecipe?.id }),
+    [book.recipes, coverPhotoRecipe]
+  )
   const TOTAL = flipPages.length + 1
 
   // Registrar vista cuando cambia la página a una receta (no en páginas de foto)
@@ -217,7 +224,7 @@ export default function FlipBookScreen({
           className={styles.book}
           onFlip={e => setPage(e.data)}
         >
-          <Cover book={book} coverStyle={book.coverStyle} />
+          <Cover book={book} coverStyle={book.coverStyle} coverPhotoRecipe={coverPhotoRecipe} />
           {flipPages.map(entry => {
             const { recipe, recipeNumber } = entry
             const key = `${book.id}:${recipe.id}`
@@ -235,7 +242,6 @@ export default function FlipBookScreen({
                 key={recipe.id}
                 recipe={recipe}
                 recipeNumber={recipeNumber}
-                showImageInline={entry.showImageInline}
                 isFavorite={isFavorite(key)}
                 onToggleFavorite={() => onToggleFavorite(key)}
                 note={getNote(key)}

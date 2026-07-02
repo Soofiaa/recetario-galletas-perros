@@ -36,7 +36,7 @@ function PatternOverlay({ patternId, opacity, color }) {
   )
 }
 
-const Cover = React.forwardRef(({ book, coverStyle: cs }, ref) => {
+const Cover = React.forwardRef(({ book, coverStyle: cs, coverPhotoRecipe = null }, ref) => {
   const s      = { ...DEFAULT_COVER_STYLE, ...cs }
   const recipes = book?.recipes || []
   const name    = book?.name || 'Recetario'
@@ -112,6 +112,12 @@ const Cover = React.forwardRef(({ book, coverStyle: cs }, ref) => {
             </div>
           ))}
         </div>
+      )}
+
+      {coverPhotoRecipe?.image && (
+        <figure className={styles.coverPhoto}>
+          <img src={coverPhotoRecipe.image} alt={coverPhotoRecipe.title} />
+        </figure>
       )}
 
       {/* Pie */}

@@ -1,29 +1,25 @@
-// Construye la lista plana de páginas del flipbook a partir de las recetas.
-// Cada receta ocupa una página; si la foto no cabe con holgura,
-// se agrega una hoja extra justo después con la imagen contenida.
-export function photoFitsOnRecipePage(recipe) {
+export function photoFitsOnCover(recipes) {
+  if (recipes.length !== 1) return false
+  const recipe = recipes[0]
   if (!recipe.image) return false
 
-  const ingredientCount = recipe.ingredients?.length ?? 0
-  const stepCount = recipe.steps?.length ?? 0
   const textLength = [
     recipe.title,
     recipe.subtitle,
-    recipe.yield,
-    ...(recipe.ingredients ?? []).map(ing => `${ing.name} ${ing.amount}`),
-    ...(recipe.steps ?? []),
-    recipe.note,
   ].join(' ').length
 
-  return ingredientCount <= 4 && stepCount <= 4 && textLength <= 620
+  return textLength <= 120
 }
 
-export function buildFlipPages(recipes) {
+// Construye la lista plana de páginas del flipbook a partir de las recetas.
+// La página de ingredientes/pasos no recibe fotos. Si la foto no va en portada,
+// se agrega una hoja extra justo después de la receta.
+export function buildFlipPages(recipes, options = {}) {
+  const coverPhotoRecipeId = options.coverPhotoRecipeId ?? null
   const pages = []
   recipes.forEach((recipe, i) => {
-    const showImageInline = photoFitsOnRecipePage(recipe)
-    pages.push({ type: 'recipe', recipe, recipeNumber: i + 1, showImageInline })
-    if (recipe.image && !showImageInline) {
+    pages.push({ type: 'recipe', recipe, recipeNumber: i + 1 })
+    if (recipe.image && recipe.id !== coverPhotoRecipeId) {
       pages.push({ type: 'photo', recipe, recipeNumber: i + 1 })
     }
   })

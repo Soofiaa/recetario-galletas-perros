@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildFlipPages, getRecipePageNumber, photoFitsOnRecipePage } from '../utils/flipPages'
+import { buildFlipPages, getRecipePageNumber, photoFitsOnCover } from '../utils/flipPages'
 
 const baseRecipe = (id, image = '') => ({
   id,
@@ -37,13 +37,13 @@ const longWithImage = (id, image) => ({
   ],
 })
 
-describe('photoFitsOnRecipePage', () => {
-  it('permite foto inline para recetas cortas', () => {
-    expect(photoFitsOnRecipePage(withImage('a', 'foto.jpg'))).toBe(true)
+describe('photoFitsOnCover', () => {
+  it('permite foto en portada cuando hay una sola receta', () => {
+    expect(photoFitsOnCover([withImage('a', 'foto.jpg')])).toBe(true)
   })
 
-  it('manda la foto a hoja extra cuando la receta es larga', () => {
-    expect(photoFitsOnRecipePage(longWithImage('a', 'foto.jpg'))).toBe(false)
+  it('manda la foto a hoja extra cuando hay varias recetas', () => {
+    expect(photoFitsOnCover([withImage('a', 'foto.jpg'), withImage('b', 'otra.jpg')])).toBe(false)
   })
 })
 
@@ -54,16 +54,14 @@ describe('buildFlipPages', () => {
     expect(pages.map(p => p.type)).toEqual(['recipe', 'recipe'])
   })
 
-  it('mantiene la foto en la receta cuando cabe', () => {
-    const pages = buildFlipPages([noImage('a'), withImage('b', 'foto.jpg'), noImage('c')])
-    expect(pages.map(p => p.type)).toEqual(['recipe', 'recipe', 'recipe'])
-    expect(pages[1].showImageInline).toBe(true)
+  it('omite la hoja de foto cuando la foto vive en portada', () => {
+    const pages = buildFlipPages([withImage('a', 'foto.jpg')], { coverPhotoRecipeId: 'a' })
+    expect(pages.map(p => p.type)).toEqual(['recipe'])
   })
 
-  it('agrega una hoja extra cuando la foto no cabe en la receta', () => {
+  it('agrega una hoja extra cuando la foto no vive en portada', () => {
     const pages = buildFlipPages([noImage('a'), longWithImage('b', 'foto.jpg'), noImage('c')])
     expect(pages.map(p => p.type)).toEqual(['recipe', 'recipe', 'photo', 'recipe'])
-    expect(pages[1].showImageInline).toBe(false)
     expect(pages[2].recipe.id).toBe('b')
   })
 
