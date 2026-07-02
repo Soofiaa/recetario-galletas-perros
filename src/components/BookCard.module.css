@@ -148,4 +148,15 @@
 .menu button:last-child { border-bottom: none; }
 .menu button:hover { background: var(--color-cream); }
 
+.menuBack {
+  color: var(--color-kraft-dark) !important;
+  font-weight: 600;
+}
+
+.menuCategoryActive {
+  background: var(--color-cream);
+  font-weight: 600;
+  color: var(--color-apple) !important;
+}
+
 .menuDelete { color: var(--color-apple) !important; }

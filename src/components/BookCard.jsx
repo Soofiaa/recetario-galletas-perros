@@ -22,8 +22,9 @@ function getCategoryLabel(categoryValue) {
   return cat ? cat.label.split(' ').slice(1).join(' ') : categoryValue
 }
 
-export default function BookCard({ book, onOpen, onDelete, onDesign, onEdit, onRename, favCount }) {
+export default function BookCard({ book, onOpen, onDelete, onDesign, onEdit, onRename, favCount, allCategories = CATEGORIES, onChangeCategory }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showCategoryPicker, setShowCategoryPicker] = useState(false)
 
   return (
     <div className={styles.card}>
@@ -58,10 +59,10 @@ export default function BookCard({ book, onOpen, onDelete, onDesign, onEdit, onR
       <div className={styles.menuWrap}>
         <button
           className={styles.menuBtn}
-          onClick={e => { e.stopPropagation(); setMenuOpen(v => !v) }}
+          onClick={e => { e.stopPropagation(); setMenuOpen(v => !v); setShowCategoryPicker(false) }}
           aria-label="Opciones"
         >⋯</button>
-        {menuOpen && (
+        {menuOpen && !showCategoryPicker && (
           <>
             <div className={styles.menuOverlay} onClick={() => setMenuOpen(false)} />
             <div className={styles.menu}>
@@ -70,6 +71,9 @@ export default function BookCard({ book, onOpen, onDelete, onDesign, onEdit, onR
               </button>
               <button onClick={() => { onEdit?.(); setMenuOpen(false) }}>
                 ✏️ Editar recetas
+              </button>
+              <button onClick={() => setShowCategoryPicker(true)}>
+                🏷️ Cambiar categoría
               </button>
               <button onClick={() => {
                 const name = window.prompt('Nuevo nombre:', book.name)
@@ -84,6 +88,30 @@ export default function BookCard({ book, onOpen, onDelete, onDesign, onEdit, onR
                 className={styles.menuDelete}
                 onClick={() => { if (window.confirm(`¿Eliminar "${book.name}"?`)) onDelete() }}
               >🗑️ Eliminar</button>
+            </div>
+          </>
+        )}
+
+        {menuOpen && showCategoryPicker && (
+          <>
+            <div className={styles.menuOverlay} onClick={() => { setShowCategoryPicker(false); setMenuOpen(false) }} />
+            <div className={styles.menu}>
+              <button onClick={() => setShowCategoryPicker(false)} className={styles.menuBack}>
+                ← Volver
+              </button>
+              {allCategories.map(cat => (
+                <button
+                  key={cat.value}
+                  className={cat.value === book.category ? styles.menuCategoryActive : ''}
+                  onClick={() => {
+                    onChangeCategory?.(cat.value)
+                    setShowCategoryPicker(false)
+                    setMenuOpen(false)
+                  }}
+                >
+                  {cat.label}{cat.value === book.category ? ' ✓' : ''}
+                </button>
+              ))}
             </div>
           </>
         )}

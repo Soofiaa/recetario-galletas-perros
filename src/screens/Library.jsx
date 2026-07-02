@@ -12,6 +12,7 @@ export default function Library({
   darkMode, onToggleDark, getFavCount,
   trash, onRestore, onPurge, onEmptyTrash,
   customCategories = [], onAddCategory, onRemoveCategory,
+  onChangeBookCategory,
 }) {
   const [selectedCategory, setSelectedCategory] = useState(null)
   const [showNewCategory, setShowNewCategory] = useState(false)
@@ -169,6 +170,8 @@ export default function Library({
             onEdit={() => onEdit(book)}
             onRename={name => onRename(book.id, name)}
             favCount={getFavCount(book)}
+            allCategories={allCategories}
+            onChangeCategory={category => onChangeBookCategory(book.id, category)}
           />
         ))}
         <button className={styles.newCard} onClick={() => onAdd(null)}>

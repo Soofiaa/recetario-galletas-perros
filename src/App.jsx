@@ -134,6 +134,7 @@ export default function App() {
           customCategories={customCategories}
           onAddCategory={addCustomCategory}
           onRemoveCategory={removeCustomCategory}
+          onChangeBookCategory={(id, category) => updateBook(id, { category })}
         />
       )}
 
